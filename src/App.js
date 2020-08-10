@@ -1,26 +1,66 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+// actions
+import { fetchData, setError, deleteCard } from './redux/actions';
+// components
+import { SearchField, WeatherCard, Loader } from './components';
+// валидирование инпута
+const validateSearch = (search) => {
+  if (search.length > 2 && search === search.replace(/[^a-z]/gi, '')) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-function App() {
+const App = () => {
+  const { weatherCards, error, loading } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  // При поиске
+  const onSearchWeather = (search) => {
+    if (weatherCards.find((card) => card.name.toLowerCase() === search.toLowerCase())) {
+      dispatch(setError('Card already exists'));
+    } else if (!validateSearch(search)) {
+      dispatch(setError('Town not found.Remember that only english names are valid'));
+    } else {
+      dispatch(fetchData(search));
+    }
+  };
+
+  // При удалении
+  const onDeleteCard = (id) => {
+    dispatch(deleteCard(id));
+  };
+
+  // При изменении , сохранение в localstorage
+  React.useEffect(() => {
+    localStorage.setItem('weatherCards', JSON.stringify(weatherCards));
+  }, [weatherCards]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="container">
+        <h1 className="app__title">Weather app</h1>
+
+        {error && <p className="app__error">{error}</p>}
+        {loading && (
+          <div className="app__loader">
+            <Loader />
+          </div>
+        )}
+        {weatherCards.length === 0 && <p className="app__empty">No cards yet</p>}
+
+        <SearchField onSearchWeather={onSearchWeather} />
+
+        <div className="app__content">
+          {weatherCards.map((card) => {
+            return <WeatherCard onDeleteCard={onDeleteCard} key={card.id} {...card} />;
+          })}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
