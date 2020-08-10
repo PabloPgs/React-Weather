@@ -29,6 +29,7 @@ const SearchField = ({ onSearchWeather }) => {
       <button className="search-field__btn btn btn-main" type="submit">
         Add
       </button>
+
       <button onClick={clearSearch} className="search-field__btn btn btn-secondary" type="button">
         Clear
       </button>

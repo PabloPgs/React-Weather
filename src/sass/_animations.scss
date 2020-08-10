@@ -1,0 +1,12 @@
+.fade-appear {
+  opacity: 0;
+  box-shadow: 0px 0px 14px 0px #fff;
+  &-active {
+    opacity: 1;
+    transition: opacity 0.3s linear;
+  }
+}
+
+.fade-enter-done {
+  box-shadow: 0px 0px 6px 0px #fff;
+}

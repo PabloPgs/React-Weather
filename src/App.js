@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 // actions
 import { fetchData, setError, deleteCard } from './redux/actions';
 // components
@@ -55,7 +56,11 @@ const App = () => {
 
         <div className="app__content">
           {weatherCards.map((card) => {
-            return <WeatherCard onDeleteCard={onDeleteCard} key={card.id} {...card} />;
+            return (
+              <CSSTransition in={true} appear={true} timeout={1200} classNames="fade">
+                <WeatherCard onDeleteCard={onDeleteCard} key={card.id} {...card} />
+              </CSSTransition>
+            );
           })}
         </div>
       </div>
