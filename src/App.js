@@ -57,8 +57,8 @@ const App = () => {
         <div className="app__content">
           {weatherCards.map((card) => {
             return (
-              <CSSTransition in={true} appear={true} timeout={1200} classNames="fade">
-                <WeatherCard onDeleteCard={onDeleteCard} key={card.id} {...card} />
+              <CSSTransition key={card.id} in={true} appear={true} timeout={1200} classNames="fade">
+                <WeatherCard onDeleteCard={onDeleteCard} {...card} />
               </CSSTransition>
             );
           })}
