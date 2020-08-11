@@ -1,7 +1,5 @@
-const savedCards = JSON.parse(localStorage.getItem('weatherCards')) || [];
-
 const initialState = {
-  weatherCards: savedCards,
+  weatherCards: [],
   loading: false,
   error: '',
 };

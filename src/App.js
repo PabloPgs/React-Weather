@@ -34,11 +34,6 @@ const App = () => {
     dispatch(deleteCard(id));
   };
 
-  // При изменении , сохранение в localstorage
-  React.useEffect(() => {
-    localStorage.setItem('weatherCards', JSON.stringify(weatherCards));
-  }, [weatherCards]);
-
   return (
     <div className="app">
       <div className="container">
